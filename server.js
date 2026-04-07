@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const swaggerRouter = require('./swagger'); 
 const errorHandler = require('./middleware/errorHandler');
 const notFound = require('./middleware/notFound');
 const logger = require('./utils/logger');
-const userRouter=require('./routes/userRoutes');
-const taskRouter=require('./routes/taskRoutes');
+const userRouter = require('./routes/userRoutes');
+const taskRouter = require('./routes/taskRoutes');
 const promiseErrorAndUncaught_funct = require('./utils/promiseErrorAndUncaughtError');
 require('dotenv').config();
 
@@ -18,7 +19,7 @@ const PORT = process.env.PORT || 6000;
 // Middleware 
 app.use(express.json());
 
-//CORS: allow frontend origin
+// CORS: allow frontend origin
 app.use(
   cors({
     origin: process.env.CLIENT_URL || 'http://localhost:3500',
@@ -26,15 +27,13 @@ app.use(
   })
 );
 
-
-//Routes
-app.use('/users',userRouter);
-app.use('/tasks',taskRouter);
-app.use('/',(req,res)=>{
-  res.setHeader('content-type','text/html')
-  res.send('<h2>Welcome to smart-task-manager-api</h2>')
+// Routes
+app.use('/users', userRouter);
+app.use('/tasks', taskRouter);
+app.use('/', (req, res) => {
+  res.setHeader('content-type', 'text/html');
+  res.send('<h2>Welcome to smart-task-manager-api</h2>');
 });
-
 
 // Swagger UI
 app.use('/api-docs', swaggerRouter);
