@@ -1,0 +1,47 @@
+##route to get all users
+GET http://localhost:3500/users/
+
+###route to get a single user
+GET http://localhost:3500/users/69d428d06d91d3a608d515e3
+
+###route to create a single user
+POST http://localhost:3500/users/
+Content-Type: application/json
+
+{
+ "username": "TaskMaster01",
+  "googleId": "9988776655",
+  "photoUrl": "https://example.com/photos/taskmaster.jpg",
+  "serviceProvider": "google"
+}
+
+###route to update user
+DELETE  http://localhost:3500/users/69d4c8a700d8424c4a1a465f
+
+
+##Tasks
+
+###route to get all tasks
+GET http://localhost:3500/tasks
+
+###route to get a single task
+GET http://localhost:3500/tasks/69d4d6c259f5d7c0021a6978
+
+###route to create a task
+POST http://localhost:3500/tasks
+Content-Type: application/json
+
+{
+  "userId": "642a1f2e5b4c2f0012345681",
+  "title": "Prepare presentation",
+  "description": "Record video and explain API features",
+  "status": "pending",
+  "priority": "low",
+  "dueDate": "2026-04-13"
+}
+
+
+
+
+
+
