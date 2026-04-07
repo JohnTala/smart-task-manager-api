@@ -1,17 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../swagger.json'); 
-
-// Dynamic host injection
-swaggerDocument.host =
-  process.env.NODE_ENV === 'production'
-    ? 'books-contacts-api.onrender.com'
-    : 'localhost:3500'; 
+const swaggerDocument = require('./swagger.json'); 
 
 // Swagger UI options
 const options = {
-  customSiteTitle: 'Smart-manager API Docs',
+  customSiteTitle: 'Smart Task Manager API Docs',
   swaggerOptions: {
     docExpansion: 'none',
     defaultModelsExpandDepth: -1,
