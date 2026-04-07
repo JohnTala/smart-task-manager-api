@@ -30,13 +30,17 @@ app.use(
 // Routes
 app.use('/users', userRouter);
 app.use('/tasks', taskRouter);
+
+// Swagger UI
+app.use('/api-docs', swaggerRouter);
+
+//welcome page
 app.use('/', (req, res) => {
   res.setHeader('content-type', 'text/html');
   res.send('<h2>Welcome to smart-task-manager-api</h2>');
 });
 
-// Swagger UI
-app.use('/api-docs', swaggerRouter);
+
 
 // Error handlers
 app.use(notFound);
