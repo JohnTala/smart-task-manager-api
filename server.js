@@ -1,5 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const swaggerRouter = require('./swagger'); 
+const errorHandler = require('./middleware/errorHandler');
+const notFound = require('./middleware/notFound');
 const logger = require('./utils/logger');
 const userRouter=require('./routes/userRoutes');
 const taskRouter=require('./routes/taskRoutes');
@@ -15,13 +18,30 @@ const PORT = process.env.PORT || 6000;
 // Middleware 
 app.use(express.json());
 
+//CORS: allow frontend origin
+app.use(
+  cors({
+    origin: process.env.CLIENT_URL || 'http://localhost:3500',
+    credentials: true,
+  })
+);
+
+
 //Routes
+app.use('/users',userRouter);
+app.use('/tasks',taskRouter);
 app.use('/',(req,res)=>{
   res.setHeader('content-type','text/html')
   res.send('<h2>Welcome to smart-task-manager-api</h2>')
-})
-app.use('/users',userRouter)
-app.use('/tasks',taskRouter)
+});
+
+
+// Swagger UI
+app.use('/api-docs', swaggerRouter);
+
+// Error handlers
+app.use(notFound);
+app.use(errorHandler);
 
 // Connect to MongoDB & start server
 mongoose

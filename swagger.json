@@ -1,0 +1,156 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Smart Task Manager API",
+    "description": "API documentation for managing Tasks, Users, and authentication",
+    "version": "1.0.0"
+  },
+  "basePath": "/",
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+
+  "paths": {
+    "/tasks": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "Get all tasks",
+        "responses": { "200": { "description": "OK" }, "500": { "description": "Server Error" } }
+      },
+      "post": {
+        "tags": ["Tasks"],
+        "summary": "Create a new task",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Task" }
+          }
+        ],
+        "responses": { "201": { "description": "Created" }, "400": { "description": "Bad Request" }, "500": { "description": "Server Error" } }
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "Get a single task by ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      },
+      "put": {
+        "tags": ["Tasks"],
+        "summary": "Update a task by ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" },
+          { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/Task" } }
+        ],
+        "responses": { "200": { "description": "Updated" }, "400": { "description": "Bad Request" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      },
+      "delete": {
+        "tags": ["Tasks"],
+        "summary": "Delete a task by ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
+        "responses": { "200": { "description": "Deleted" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      }
+    },
+
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users",
+        "responses": { "200": { "description": "OK" }, "500": { "description": "Server Error" } }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create a new user",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/User" }
+          }
+        ],
+        "responses": { "201": { "description": "Created" }, "400": { "description": "Bad Request" }, "500": { "description": "Server Error" } }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get a single user by ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update a user by ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" },
+          { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/User" } }
+        ],
+        "responses": { "200": { "description": "Updated" }, "400": { "description": "Bad Request" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Delete a user by ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
+        "responses": { "200": { "description": "Deleted" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      }
+    },
+
+    "/auth/github": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Initiate GitHub OAuth login",
+        "description": "Cannot be tested in Swagger UI. Opens GitHub login in browser.",
+        "responses": { "302": { "description": "Redirect to GitHub login page" } }
+      }
+    },
+    "/auth/github/redirect": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "GitHub OAuth callback",
+        "description": "Cannot be tested in Swagger UI. Redirects to /auth/profile after login.",
+        "responses": { "302": { "description": "Redirect to /auth/profile after login" } }
+      }
+    },
+    "/auth/profile": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get authenticated user",
+        "description": "Must be tested in browser after logging in via /auth/github.",
+        "responses": { "200": { "description": "User returned" }, "401": { "description": "Not authenticated" } }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Logout user",
+        "responses": { "302": { "description": "Redirect to homepage" } }
+      }
+    }
+  },
+
+  "definitions": {
+    "Task": {
+      "type": "object",
+      "required": ["title", "description", "completed"],
+      "properties": {
+        "title": { "type": "string", "example": "Finish API documentation" },
+        "description": { "type": "string", "example": "Write Swagger docs for Smart Task Manager API" },
+        "completed": { "type": "boolean", "example": false },
+        "dueDate": { "type": "string", "format": "date", "example": "2026-04-15" }
+      }
+    },
+    "User": {
+      "type": "object",
+      "required": ["name", "email", "role"],
+      "properties": {
+        "name": { "type": "string", "example": "John Talatala" },
+        "email": { "type": "string", "example": "john@example.com" },
+        "role": { "type": "string", "example": "admin" }
+      }
+    }
+  }
+}
