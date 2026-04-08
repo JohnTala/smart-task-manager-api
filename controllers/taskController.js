@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Task = require('../models/Task');
 
 /* #swagger.tags = ['Tasks'] */
@@ -7,7 +8,7 @@ const getAllTasks = async (req, res) => {
     const tasks = await Task.find();
     res.status(200).json(tasks);
   } catch (err) {
-    console.error(err);
+    console.error('getAllTasks Error:', err);
     res.status(500).json({ success: false, message: 'Server Error' });
   }
 };
@@ -20,7 +21,7 @@ const createTask = async (req, res) => {
     await task.save();
     res.status(201).json(task);
   } catch (err) {
-    console.error(err);
+    console.error('createTask Error:', err);
     res.status(400).json({ success: false, message: err.message || 'Invalid data' });
   }
 };
@@ -29,13 +30,19 @@ const createTask = async (req, res) => {
 const getSingleTask = async (req, res) => {
   /* #swagger.summary = 'Get a task by ID' */
   try {
-    const task = await Task.findById(req.params.id);
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, message: 'Invalid Task ID' });
+    }
+
+    const task = await Task.findById(id);
     if (!task) {
       return res.status(404).json({ success: false, message: 'Task not found' });
     }
     res.status(200).json(task);
   } catch (err) {
-    console.error(err);
+    console.error('getSingleTask Error:', err);
     res.status(500).json({ success: false, message: 'Server Error' });
   }
 };
@@ -44,15 +51,25 @@ const getSingleTask = async (req, res) => {
 const updateTask = async (req, res) => {
   /* #swagger.summary = 'Update a task by ID' */
   try {
-    const id = req.params.id;
-    const updatedTask = await Task.findByIdAndUpdate(id, req.body, { new: true, runValidators: true });
-    if (!updatedTask) {
-      return res.status(404).json({ success: false, message: 'No task found!' });
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, message: 'Invalid Task ID' });
     }
+
+    const updatedTask = await Task.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedTask) {
+      return res.status(404).json({ success: false, message: 'Task not found' });
+    }
+
     res.status(200).json(updatedTask);
   } catch (err) {
-    console.error(err.message);
-    res.status(400).json({ success: false, message: err.message || 'Invalid Data' });
+    console.error('updateTask Error:', err);
+    res.status(400).json({ success: false, message: err.message || 'Invalid data' });
   }
 };
 
@@ -60,16 +77,21 @@ const updateTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   /* #swagger.summary = 'Delete a task by ID' */
   try {
-    const id = req.params.id;
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ success: false, message: 'Invalid Task ID' });
+    }
+
     const removedTask = await Task.findByIdAndDelete(id);
     if (!removedTask) {
-      res.status(400).json({ success: false, message: 'No task found' });
-    } else {
-      res.status(200).json({ task: removedTask, message: 'Task deleted!' });
+      return res.status(404).json({ success: false, message: 'Task not found' });
     }
+
+    res.status(200).json({ task: removedTask, message: 'Task deleted!' });
   } catch (err) {
-    console.error(err);
-    res.status(400).json({ success: false, message: 'No valid data' });
+    console.error('deleteTask Error:', err);
+    res.status(500).json({ success: false, message: 'Server Error' });
   }
 };
 

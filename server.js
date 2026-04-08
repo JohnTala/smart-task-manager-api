@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -18,16 +19,13 @@ const taskRouter = require('./routes/taskRoutes');
 promiseErrorAndUncaught_funct();
 
 const app = express();
-
-// Use Render's PORT or fallback
 const PORT = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
-
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || '*', 
+    origin: process.env.CLIENT_URL || '*', // allow all if not specified
     credentials: true,
   })
 );
@@ -43,21 +41,20 @@ app.get('/', (req, res) => {
   res.send('<h2>Welcome to Smart Task Manager API </h2>');
 });
 
-// Error handling middleware 
+// Error handling middleware
 app.use(notFound);
 app.use(errorHandler);
 
-// Start server FIRST 
+// Start server first
 app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT}`);
 });
 
-// Connect to MongoDB 
+// Connect to MongoDB
 mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => {
-    logger.info('MongoDB connected successfully');
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
-  .catch((err) => {
-    logger.error(`MongoDB connection error: ${err.message}`);
-  });
+  .then(() => logger.info('MongoDB connected successfully'))
+  .catch((err) => logger.error(`MongoDB connection error: ${err.message}`));
