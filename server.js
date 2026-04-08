@@ -52,9 +52,6 @@ app.listen(PORT, () => {
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URI)
   .then(() => logger.info('MongoDB connected successfully'))
   .catch((err) => logger.error(`MongoDB connection error: ${err.message}`));
