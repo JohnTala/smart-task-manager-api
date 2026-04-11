@@ -2,11 +2,11 @@
   "swagger": "2.0",
   "info": {
     "title": "Smart Task Manager API",
-    "description": "API documentation for managing Tasks, Users, and authentication",
+    "description": "API documentation for managing Tasks, Users, Categories, Comments, and authentication",
     "version": "1.0.0"
   },
   "basePath": "/",
-  "schemes": [ "https"],
+  "schemes": ["http", "https"],
   "consumes": ["application/json"],
   "produces": ["application/json"],
 
@@ -99,6 +99,94 @@
       }
     },
 
+    "/categories": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get all categories",
+        "responses": { "200": { "description": "OK" }, "500": { "description": "Server Error" } }
+      },
+      "post": {
+        "tags": ["Categories"],
+        "summary": "Create a new category",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Category" }
+          }
+        ],
+        "responses": { "201": { "description": "Created" }, "400": { "description": "Bad Request" }, "500": { "description": "Server Error" } }
+      }
+    },
+    "/categories/{id}": {
+      "get": {
+        "tags": ["Categories"],
+        "summary": "Get a category by ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      },
+      "put": {
+        "tags": ["Categories"],
+        "summary": "Update a category by ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" },
+          { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/Category" } }
+        ],
+        "responses": { "200": { "description": "Updated" }, "400": { "description": "Bad Request" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      },
+      "delete": {
+        "tags": ["Categories"],
+        "summary": "Delete a category by ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
+        "responses": { "200": { "description": "Deleted" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      }
+    },
+
+    "/comments": {
+      "get": {
+        "tags": ["Comments"],
+        "summary": "Get all comments",
+        "responses": { "200": { "description": "OK" }, "500": { "description": "Server Error" } }
+      },
+      "post": {
+        "tags": ["Comments"],
+        "summary": "Create a new comment",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/Comment" }
+          }
+        ],
+        "responses": { "201": { "description": "Created" }, "400": { "description": "Bad Request" }, "500": { "description": "Server Error" } }
+      }
+    },
+    "/comments/{id}": {
+      "get": {
+        "tags": ["Comments"],
+        "summary": "Get a comment by ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
+        "responses": { "200": { "description": "OK" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      },
+      "put": {
+        "tags": ["Comments"],
+        "summary": "Update a comment by ID",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "string" },
+          { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/Comment" } }
+        ],
+        "responses": { "200": { "description": "Updated" }, "400": { "description": "Bad Request" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      },
+      "delete": {
+        "tags": ["Comments"],
+        "summary": "Delete a comment by ID",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "type": "string" }],
+        "responses": { "200": { "description": "Deleted" }, "404": { "description": "Not Found" }, "500": { "description": "Server Error" } }
+      }
+    },
+
     "/auth/github": {
       "get": {
         "tags": ["Auth"],
@@ -150,6 +238,24 @@
         "name": { "type": "string", "example": "John Talatala" },
         "email": { "type": "string", "example": "john@example.com" },
         "role": { "type": "string", "example": "admin" }
+      }
+    },
+    "Category": {
+      "type": "object",
+      "required": ["name", "user"],
+      "properties": {
+        "name": { "type": "string", "example": "Development" },
+        "description": { "type": "string", "example": "Coding related tasks" },
+        "user": { "type": "string", "example": "user_id_here" }
+      }
+    },
+    "Comment": {
+      "type": "object",
+      "required": ["text", "task", "user"],
+      "properties": {
+        "text": { "type": "string", "example": "This task needs to be completed soon" },
+        "task": { "type": "string", "example": "task_id_here" },
+        "user": { "type": "string", "example": "user_id_here" }
       }
     }
   }

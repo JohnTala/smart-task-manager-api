@@ -14,6 +14,8 @@ const promiseErrorAndUncaught_funct = require('./utils/promiseErrorAndUncaughtEr
 const swaggerRouter = require('./swagger');
 const userRouter = require('./routes/userRoutes');
 const taskRouter = require('./routes/taskRoutes');
+const categoryRouter = require('./routes/categoryRoutes');
+const commentRouter = require('./routes/commentRoutes');
 
 // Handle global errors
 promiseErrorAndUncaught_funct();
@@ -33,6 +35,8 @@ app.use(
 // Routes
 app.use('/users', userRouter);
 app.use('/tasks', taskRouter);
+app.use('/categories',categoryRouter);
+app.use('/comments',commentRouter);
 app.use('/api-docs', swaggerRouter);
 
 // Welcome route
