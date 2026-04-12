@@ -31,7 +31,10 @@ const TaskSchema = new mongoose.Schema({
     enum: ['low', 'medium', 'high'],
     default: 'medium'
   },
-
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category'
+  },
   dueDate: {
     type: Date
   }
