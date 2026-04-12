@@ -5,7 +5,9 @@ const Comment = require('../models/Comment');
 const getAllComments = async (req, res) => {
   /* #swagger.summary = 'Retrieve all comments' */
   try {
-    const comments = await Comment.find();
+    const comments = await Comment.find()
+                                  .populate('user', 'username')
+                                  .populate('task', 'title');;
     res.status(200).json(comments);
   } catch (err) {
     console.error('getAllComments Error:', err);
@@ -36,7 +38,9 @@ const getSingleComment = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Invalid Comment ID' });
     }
 
-    const comment = await Comment.findById(id);
+    const comment = await Comment.findById(id)
+                                .populate('user', 'username')
+                                .populate('task', 'title');;
     if (!comment) {
       return res.status(404).json({ success: false, message: 'Comment not found' });
     }

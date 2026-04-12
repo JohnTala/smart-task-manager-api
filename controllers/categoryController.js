@@ -5,7 +5,8 @@ const Category= require('../models/Category');
 const getAllCategories = async (req, res) => {
   /* #swagger.summary = 'Retrieve all categories' */
   try {
-    const categories = await Category.find();
+    const categories = await Category.find()
+                                    .populate('user', 'username');;
     res.status(200).json(categories);
   } catch (err) {
     console.error('getAllCategories Error:', err);

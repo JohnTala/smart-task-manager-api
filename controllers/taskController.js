@@ -4,8 +4,12 @@ const Task = require('../models/Task');
 /* #swagger.tags = ['Tasks'] */
 const getAllTasks = async (req, res) => {
   /* #swagger.summary = 'Retrieve all tasks' */
+  // Fetch tasks with related user (username, googleId) and category (name)
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find()
+                            .populate('userId', 'username googleId')
+                            .populate('category', 'name');
+
     res.status(200).json(tasks);
   } catch (err) {
     console.error('getAllTasks Error:', err);
@@ -35,8 +39,11 @@ const getSingleTask = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({ success: false, message: 'Invalid Task ID' });
     }
-
-    const task = await Task.findById(id);
+    // Fetch task by ID with populated user (username) and category (name)
+    const task = await Task.findById(id)
+                            .populate('userId', 'username')
+                             .populate('category', 'name');
+  
     if (!task) {
       return res.status(404).json({ success: false, message: 'Task not found' });
     }

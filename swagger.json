@@ -221,42 +221,56 @@
   },
 
   "definitions": {
-    "Task": {
-      "type": "object",
-      "required": ["title", "description", "completed"],
-      "properties": {
-        "title": { "type": "string", "example": "Finish API documentation" },
-        "description": { "type": "string", "example": "Write Swagger docs for Smart Task Manager API" },
-        "completed": { "type": "boolean", "example": false },
-        "dueDate": { "type": "string", "format": "date", "example": "2026-04-15" }
+  "Task": {
+    "type": "object",
+    "required": ["title", "description", "completed"],
+    "properties": {
+      "title": { "type": "string", "example": "Finish API documentation" },
+      "description": { "type": "string", "example": "Write Swagger docs for Smart Task Manager API" },
+      "completed": { "type": "boolean", "example": false },
+      "dueDate": { "type": "string", "format": "date", "example": "2026-04-15" }
+    }
+  },
+  "User": {
+    "type": "object",
+    "required": ["username", "googleId"],
+    "properties": {
+      "username": { "type": "string", "example": "JohnTalatala" },
+      "googleId": { "type": "string", "example": "1122334455" },
+      "photoUrl": { "type": "string", "example": "https://example.com/photo.jpg" },
+      "serviceProvider": { "type": "string", "example": "google" }
+    }
+  },
+  "Category": {
+    "type": "object",
+    "required": ["name", "user"],
+    "properties": {
+      "name": { "type": "string", "example": "Development" },
+      "description": { "type": "string", "example": "Coding related tasks" },
+      "user": {
+        "type": "string",
+        "description": "User ID (ObjectId)",
+        "example": "69d428a36d91d3a608d515e2"
       }
-    },
-    "User": {
-      "type": "object",
-      "required": ["name", "email", "role"],
-      "properties": {
-        "name": { "type": "string", "example": "John Talatala" },
-        "email": { "type": "string", "example": "john@example.com" },
-        "role": { "type": "string", "example": "admin" }
-      }
-    },
-    "Category": {
-      "type": "object",
-      "required": ["name", "user"],
-      "properties": {
-        "name": { "type": "string", "example": "Development" },
-        "description": { "type": "string", "example": "Coding related tasks" },
-        "user": { "type": "string", "example": "user_id_here" }
-      }
-    },
-    "Comment": {
-      "type": "object",
-      "required": ["text", "task", "user"],
-      "properties": {
-        "text": { "type": "string", "example": "This task needs to be completed soon" },
-        "task": { "type": "string", "example": "task_id_here" },
-        "user": { "type": "string", "example": "user_id_here" }
+    }
+  },
+  "Comment": {
+    "type": "object",
+    "required": ["text", "task", "user"],
+    "properties": {
+      "text": { "type": "string", "example": "This task needs to be completed soon" },
+      "task": {
+        "type": "string",
+        "description": "Task ID (ObjectId)",
+        "example": "69d51c1259f5d7c0021a6979"
+      },
+      "user": {
+        "type": "string",
+        "description": "User ID (ObjectId)",
+        "example": "69d428a36d91d3a608d515e2"
       }
     }
   }
+}
+
 }
