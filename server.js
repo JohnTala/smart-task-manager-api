@@ -1,9 +1,9 @@
-// server.js
 const express = require('express');
 const mongoose = require('mongoose');
 
 mongoose.set('toObject', { virtuals: true });
-mongoose.set('toJSON', { virtuals: true });//these lines help to fully enable virtual populate globally.
+mongoose.set('toJSON', { virtuals: true });
+
 const cors = require('cors');
 const passport = require('passport');
 const session = require('express-session');
@@ -50,7 +50,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // --------------------
-// Session & Passport (MOVED UP - BEFORE ROUTES)
+// Session & Passport 
 // --------------------
 app.use(
   session({
@@ -69,7 +69,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // --------------------
-// Routes (NOW AFTER PASSPORT)
+// Routes
 // --------------------
 app.use('/users', userRouter);
 app.use('/tasks', taskRouter);
@@ -89,15 +89,26 @@ app.get('/', (req, res) => {
 app.use(notFound);
 app.use(errorHandler);
 
-// Start server first
+// --------------------
+// CONDITIONAL START 
+// --------------------
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    logger.info(`Server running on port ${PORT}`);
+  });
+}
 
-// Connect to MongoDB
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => logger.info('MongoDB connected successfully'))
-  .catch((err) => logger.error(`MongoDB connection error: ${err.message}`));
+// --------------------
+// CONDITIONAL DB CONNECT 
+// --------------------
+if (process.env.NODE_ENV !== 'test') {
+  mongoose
+    .connect(process.env.MONGODB_URI)
+    .then(() => logger.info('MongoDB connected successfully'))
+    .catch((err) => logger.error(`MongoDB connection error: ${err.message}`));
+}
+
+// Export app for testing
+module.exports = app;
