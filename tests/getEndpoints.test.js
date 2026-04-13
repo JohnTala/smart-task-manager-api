@@ -15,7 +15,7 @@ describe('GET Users', () => {
 
   test('GET /users', async () => {
     await User.create({
-      username: 'john',
+      username: 'jose',
       password: '12345678',
       googleId: '123'
     });

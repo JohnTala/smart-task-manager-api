@@ -1,8 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+// This ensures that virtual fields are included when converting documents to plain JavaScript objects
 mongoose.set('toObject', { virtuals: true });
+
+// This ensures that virtual fields are included when converting documents to JSON (e.g. API responses)
 mongoose.set('toJSON', { virtuals: true });
+
 
 const cors = require('cors');
 const passport = require('passport');

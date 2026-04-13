@@ -3,7 +3,7 @@ const router = express.Router();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
-// Ensure correct scheme + host for local vs production
+// correct scheme and host for local vs production
 const isProduction = process.env.NODE_ENV === 'production';
 
 swaggerDocument.host = isProduction
