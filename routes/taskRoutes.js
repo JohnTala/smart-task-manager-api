@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const taskController = require('../controllers/taskController');
 const { validationRulesTask, validateTask } = require('../middleware/validateTask');
+const isAuthenticated=require('../middleware/isAuthenticated');
 const logger = require('../utils/logger');
 
 // Log when routes are loaded
@@ -13,7 +14,7 @@ router.get('/', taskController.getAllTasks);
 */
 
 // Create a new task
-router.post('/', validationRulesTask, validateTask, taskController.createTask);
+router.post('/',isAuthenticated, validationRulesTask, validateTask, taskController.createTask);
 /* #swagger.tags = ['Tasks']
    #swagger.summary = 'Create a new task'
 */
@@ -25,13 +26,13 @@ router.get('/:id', taskController.getSingleTask);
 */
 
 // Update a task by ID
-router.put('/:id', validationRulesTask, validateTask, taskController.updateTask);
+router.put('/:id',isAuthenticated, validationRulesTask, validateTask, taskController.updateTask);
 /* #swagger.tags = ['Tasks']
    #swagger.summary = 'Update a task by ID'
 */
 
 // Delete a task by ID
-router.delete('/:id', taskController.deleteTask);
+router.delete('/:id',isAuthenticated, taskController.deleteTask);
 /* #swagger.tags = ['Tasks']
    #swagger.summary = 'Delete a task by ID'
 */

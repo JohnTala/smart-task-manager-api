@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const commentController = require('../controllers/commentController');
 const { validationRulesComment, validateComment } = require('../middleware/validateComment');
+const isAuthenticated=require('../middleware/isAuthenticated');
 const logger = require('../utils/logger');
 
 // Log when routes are loaded
@@ -13,7 +14,7 @@ router.get('/', commentController.getAllComments);
 */
 
 // Create a new comment
-router.post('/', validationRulesComment, validateComment, commentController.createComment);
+router.post('/',isAuthenticated, validationRulesComment, validateComment, commentController.createComment);
 /* #swagger.tags = ['Comments']
    #swagger.summary = 'Create a new comment'
 */
@@ -25,13 +26,13 @@ router.get('/:id', commentController.getSingleComment);
 */
 
 // Update a comment by ID
-router.put('/:id', validationRulesComment, validateComment, commentController.updateComment);
+router.put('/:id',isAuthenticated, validationRulesComment, validateComment, commentController.updateComment);
 /* #swagger.tags = ['Comments']
    #swagger.summary = 'Update a comment by ID'
 */
 
 // Delete a comment by ID
-router.delete('/:id', commentController.deleteComment);
+router.delete('/:id',isAuthenticated, commentController.deleteComment);
 /* #swagger.tags = ['Comments']
    #swagger.summary = 'Delete a comment by ID'
 */

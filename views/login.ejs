@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/styles.css">
+  <title>Welcome to Oauth2.0-project| Login</title>
+</head>
+<body>
+
+   <nav>
+    <ul>
+      <li><a href="/auth">Home</a></li>
+     <% if (!user) { %>
+    <li><a href="/auth/login">Login</a></li>
+<% } else { %>
+    <li><a href="/auth/logout">Logout</a></li>
+<% } %>
+
+      <li><a href="/profile">profile</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Welcome to Oauth2.0-project| Login</h1>
+    <a href="/auth/google">Google+</a>
+  </div>
+
+</body>
+</html>

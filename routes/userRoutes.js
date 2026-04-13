@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getAllUsers, createUser, getSingleUser, updateUser, deleteUser } = require('../controllers/userController');
 const { validationRulesUsers, validateUser } = require('../middleware/validateUser');
+const isAuthenticated=require('../middleware/isAuthenticated');
 const logger = require('../utils/logger');
 
 // Log when routes are loaded
@@ -14,7 +15,7 @@ router.get('/', getAllUsers);
 */
 
 // Create a new user
-router.post('/', validationRulesUsers, validateUser, createUser);
+router.post('/',isAuthenticated, validationRulesUsers, validateUser, createUser);
 /* #swagger.tags = ['Users']
    #swagger.summary = 'Create a new user'
 */
@@ -26,13 +27,13 @@ router.get('/:id', getSingleUser);
 */
 
 // Update a user by ID
-router.put('/:id', validationRulesUsers, validateUser, updateUser);
+router.put('/:id',isAuthenticated, validationRulesUsers, validateUser, updateUser);
 /* #swagger.tags = ['Users']
    #swagger.summary = 'Update a user by ID'
 */
 
 // Delete a user by ID
-router.delete('/:id', deleteUser);
+router.delete('/:id',isAuthenticated, deleteUser);
 /* #swagger.tags = ['Users']
    #swagger.summary = 'Delete a user by ID'
 */
