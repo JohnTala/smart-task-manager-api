@@ -187,18 +187,18 @@
       }
     },
 
-    "/auth/github": {
+    "/auth/google": {
       "get": {
         "tags": ["Auth"],
-        "summary": "Initiate GitHub OAuth login",
-        "description": "Cannot be tested in Swagger UI. Opens GitHub login in browser.",
-        "responses": { "302": { "description": "Redirect to GitHub login page" } }
+        "summary": "Initiate Google OAuth login",
+        "description": "Cannot be tested in Swagger UI. Opens Google login in browser.",
+        "responses": { "302": { "description": "Redirect to Google login page" } }
       }
     },
-    "/auth/github/redirect": {
+    "/auth/google/redirect": {
       "get": {
         "tags": ["Auth"],
-        "summary": "GitHub OAuth callback",
+        "summary": "Google OAuth callback",
         "description": "Cannot be tested in Swagger UI. Redirects to /auth/profile after login.",
         "responses": { "302": { "description": "Redirect to /auth/profile after login" } }
       }
@@ -207,7 +207,7 @@
       "get": {
         "tags": ["Auth"],
         "summary": "Get authenticated user",
-        "description": "Must be tested in browser after logging in via /auth/github.",
+        "description": "Must be tested in browser after logging in via /auth/google.",
         "responses": { "200": { "description": "User returned" }, "401": { "description": "Not authenticated" } }
       }
     },
