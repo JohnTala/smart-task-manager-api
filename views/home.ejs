@@ -8,21 +8,25 @@
 </head>
 <body>
 
-  <nav>
+  <nav aria-label="Main Navigation">
     <ul>
-      <li><a href="/auth">Home</a></li>
+      <li><a href="/">Home</a></li>
      <% if (!user) { %>
-    <li><a href="/auth/login">Login</a></li>
+    <li><a href="/auth/login">Login with Google</a></li>
 <% } else { %>
     <li><a href="/auth/logout">Logout</a></li>
+    <li><a href="/profile">Profile</a></li>
 <% } %>
-
-      <li><a href="/profile">profile</a></li>
     </ul>
   </nav>
 
   <div class="container">
     <h1>Welcome to  Oauth2.0-project | Homepage</h1>
+
+    <% if (user) { %>
+      <p>Welcome, <%= user.displayName || user.username %></p>
+    <% } %>
+
     <p>This is a simple EJS page with a navbar.</p>
   </div>
 

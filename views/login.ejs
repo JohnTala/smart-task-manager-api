@@ -10,20 +10,25 @@
 
    <nav>
     <ul>
-      <li><a href="/auth">Home</a></li>
+      <li><a href="/">Home</a></li>
      <% if (!user) { %>
     <li><a href="/auth/login">Login</a></li>
 <% } else { %>
     <li><a href="/auth/logout">Logout</a></li>
+    <li><a href="/profile">Profile</a></li>
 <% } %>
-
-      <li><a href="/profile">profile</a></li>
     </ul>
   </nav>
 
   <div class="container">
     <h1>Welcome to Oauth2.0-project| Login</h1>
-    <a href="/auth/google">Google+</a>
+
+    <% if (user) { %>
+      <p>You are already logged in as <%= user.displayName || user.username %></p>
+    <% } else { %>
+      <a href="/auth/google">Login with Google</a>
+    <% } %>
+
   </div>
 
 </body>
