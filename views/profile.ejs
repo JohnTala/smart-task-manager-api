@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Profile | <%= user ? user.username : 'Guest' %></title>
+  <title>Profile | <%= user.username %></title>
   <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
 
 <nav>
   <ul>
-    <li><a href="/">Home</a></li>
+    <li><a href="/auth">Home</a></li>
     <% if (!user) { %>
       <li><a href="/auth/login">Login</a></li>
     <% } else { %>
@@ -21,18 +21,16 @@
 
 <div class="container">
 
-<% if (user) { %>
-
   <h1>Welcome, <%= user.username %></h1>
 
   <% if (user.photoUrl) { %>
-    <img src="<%= user.photoUrl %>" alt="User profile picture" width="100">
+    <img src="<%= user.photoUrl %>" width="100">
   <% } %>
 
   <hr>
 
   <h2>Your Tasks</h2>
-  <% if (tasks && tasks.length > 0) { %>
+  <% if (tasks.length > 0) { %>
     <% tasks.forEach(task => { %>
       <div>
         <strong><%= task.title %></strong>
@@ -46,7 +44,7 @@
   <hr>
 
   <h2>Your Comments</h2>
-  <% if (comments && comments.length > 0) { %>
+  <% if (comments.length > 0) { %>
     <% comments.forEach(comment => { %>
       <div>
         <p><%= comment.text %></p>
@@ -56,12 +54,6 @@
   <% } else { %>
     <p>No comments available</p>
   <% } %>
-
-<% } else { %>
-
-  <p>Please <a href="/auth/login">login</a> to view your profile.</p>
-
-<% } %>
 
 </div>
 

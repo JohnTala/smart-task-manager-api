@@ -84,10 +84,11 @@ app.use('/auth', oAuthRouter);
 app.use('/profile', profileRouter);
 
 // Welcome route
+//Keeping one homepage to avoid anyconfusion
 app.get('/', (req, res) => {
-  res.setHeader('Content-Type', 'text/html');
-  res.send('<h2>Welcome to Smart Task Manager API </h2>');
+  res.redirect('/auth');
 });
+
 
 // Error handling middleware
 app.use(notFound);

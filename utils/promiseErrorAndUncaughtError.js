@@ -1,10 +1,10 @@
 function promiseAndUncaught_funct() {
   process.on('unhandledRejection', (reason, promise) => {
-    console.error('UNHANDLED REJECTION at:', promise, 'reason:', reason);
+    console.error('[UNHANDLED REJECTION at]:', promise, 'reason:', reason);
   });
 
   process.on('uncaughtException', (err) => {
-    console.error('UNCAUGHT EXCEPTION:', err.stack || err);
+    console.error('[UNCAUGHT EXCEPTION]:', err.stack || err);
     process.exit(1);
   });
 }

@@ -1,14 +1,13 @@
-const logger={
-    info:(msg)=>{
-        console.log(`[INFO]:${msg}`)
+const logger = {
+    info: (msg) => {
+        console.log(`[INFO] [${new Date().toISOString()}]: ${msg}`);
+    },
+    error: (msg) => {
+        console.error(`[ERROR] [${new Date().toISOString()}]: ${msg}`);
+    },
+    warning: (msg) => {
+        console.warn(`[WARNING] [${new Date().toISOString()}]: ${msg}`);
+    },
+};
 
-    },
-    error:(msg)=>{
-        console.log(`[ERROR]:${msg}`)
-    },
-    warning:(msg)=>{
-         console.log(`[WARNING]: ${msg}`)
-    },
-}
-
-module.exports=logger
+module.exports = logger;
