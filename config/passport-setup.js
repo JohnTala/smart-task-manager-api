@@ -31,8 +31,7 @@ passport.use(
             username: profile.displayName,
             googleId: profile.id,
             serviceProvider: profile.provider,
-            photoUrl:
-              profile.photos?.length > 0 ? profile.photos[0].value : '',
+            photoUrl: profile.photos?.[0]?.value || '',
           });
 
           // AUTO CREATE TASK
@@ -58,6 +57,7 @@ passport.use(
 
         done(null, user);
       } catch (err) {
+        console.error('Google OAuth Error:', err);
         done(err, null);
       }
     }
