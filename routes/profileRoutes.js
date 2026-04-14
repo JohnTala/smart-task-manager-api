@@ -23,7 +23,7 @@ router.get('/', authCheck, async (req, res) => {
       comments,
     });
   } catch (err) {
-    console.error('Profile Error:', err);
+    console.error('[PROFILE ERROR]:', err);
     res.status(500).send('Server Error');
   }
 });
