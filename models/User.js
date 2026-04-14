@@ -1,4 +1,3 @@
-
 const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
@@ -27,7 +26,7 @@ const UserSchema = new mongoose.Schema({
     trim: true
   }
 }, {
-  timestamps: true 
+  timestamps: true
 });
 
 module.exports = mongoose.model('User', UserSchema);

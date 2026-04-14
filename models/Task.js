@@ -49,10 +49,8 @@ const TaskSchema = new mongoose.Schema(
   }
 );
 
-
-//  VIRTUAL RELATIONSHIP (Task → Comments)
-// This allows: Task.find().populate('comments')
-
+// VIRTUAL RELATIONSHIP (Task → Comments)
+// Enables: Task.find().populate('comments')
 TaskSchema.virtual('comments', {
   ref: 'Comment',
   localField: '_id',
