@@ -37,6 +37,7 @@ const getSingleUser = async (req, res) => {
     }
 
     const user = await User.findById(id);
+
     if (!user) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
@@ -85,15 +86,26 @@ const deleteUser = async (req, res) => {
     }
 
     const removedUser = await User.findByIdAndDelete(id);
+
     if (!removedUser) {
       return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    res.status(200).json({ user: removedUser, message: 'User deleted!' });
+    res.status(200).json({
+      user: removedUser,
+      message: 'User deleted!'
+    });
+
   } catch (err) {
     console.error('deleteUser Error:', err);
     res.status(500).json({ success: false, message: 'Server Error' });
   }
 };
 
-module.exports = { getAllUsers, createUser, getSingleUser, updateUser, deleteUser };
+module.exports = {
+  getAllUsers,
+  createUser,
+  getSingleUser,
+  updateUser,
+  deleteUser
+};

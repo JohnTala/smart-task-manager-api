@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
-const Category= require('../models/Category');
+const Category = require('../models/Category');
 
 /* #swagger.tags = ['Categories'] */
 const getAllCategories = async (req, res) => {
   /* #swagger.summary = 'Retrieve all categories' */
   try {
     const categories = await Category.find()
-                                    .populate('user', 'username');;
+      .populate('user', 'username');
+
     res.status(200).json(categories);
   } catch (err) {
     console.error('getAllCategories Error:', err);
@@ -27,20 +28,21 @@ const createCategory = async (req, res) => {
   }
 };
 
-/* #swagger.tags = ['Category'] */
+/* #swagger.tags = ['Categories'] */
 const getSingleCategory = async (req, res) => {
   /* #swagger.summary = 'Get a category by ID' */
   try {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ success: false, message: 'Invalid Task ID' });
+      return res.status(400).json({ success: false, message: 'Invalid Category ID' });
     }
 
     const category = await Category.findById(id);
     if (!category) {
       return res.status(404).json({ success: false, message: 'Category not found' });
     }
+
     res.status(200).json(category);
   } catch (err) {
     console.error('getSingleCategory Error:', err);
@@ -55,7 +57,7 @@ const updateCategory = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ success: false, message: 'Invalid Task ID' });
+      return res.status(400).json({ success: false, message: 'Invalid Category ID' });
     }
 
     const updatedCategory = await Category.findByIdAndUpdate(id, req.body, {
@@ -81,19 +83,30 @@ const deleteCategory = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ success: false, message: 'Invalid Task ID' });
+      return res.status(400).json({ success: false, message: 'Invalid Category ID' });
     }
 
     const removedCategory = await Category.findByIdAndDelete(id);
+
     if (!removedCategory) {
       return res.status(404).json({ success: false, message: 'Category not found' });
     }
 
-    res.status(200).json({ category: removedCategory, message: 'Category deleted!' });
+    res.status(200).json({
+      category: removedCategory,
+      message: 'Category deleted!'
+    });
+
   } catch (err) {
     console.error('deleteCategory Error:', err);
     res.status(500).json({ success: false, message: 'Server Error' });
   }
 };
 
-module.exports = { getAllCategories, createCategory, getSingleCategory, updateCategory, deleteCategory };
+module.exports = {
+  getAllCategories,
+  createCategory,
+  getSingleCategory,
+  updateCategory,
+  deleteCategory
+};
