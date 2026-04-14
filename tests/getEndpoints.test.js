@@ -40,7 +40,7 @@ describe('GET Users', () => {
   test('GET /users invalid id', async () => {
     const res = await request(app).get('/users/invalid');
 
-    expect(res.statusCode).toBeGreaterThanOrEqual(400);
+    expect([400, 404]).toContain(res.statusCode);
   });
 
   test('GET /users route exists', async () => {
@@ -95,7 +95,7 @@ describe('GET Tasks', () => {
   test('GET /tasks invalid id', async () => {
     const res = await request(app).get('/tasks/invalid');
 
-    expect(res.statusCode).toBeGreaterThanOrEqual(400);
+    expect([400, 404]).toContain(res.statusCode);
   });
 
   test('GET /tasks route exists', async () => {
@@ -148,7 +148,7 @@ describe('GET Categories', () => {
   test('GET /categories invalid id', async () => {
     const res = await request(app).get('/categories/invalid');
 
-    expect(res.statusCode).toBeGreaterThanOrEqual(400);
+    expect([400, 404]).toContain(res.statusCode);
   });
 
   test('GET /categories route exists', async () => {
@@ -215,7 +215,7 @@ describe('GET Comments', () => {
   test('GET /comments invalid id', async () => {
     const res = await request(app).get('/comments/invalid');
 
-    expect(res.statusCode).toBeGreaterThanOrEqual(400);
+    expect([400, 404]).toContain(res.statusCode);
   });
 
   test('GET /comments route exists', async () => {
